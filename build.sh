@@ -222,13 +222,13 @@ elif [ "$1" == "v1.29.0" ]; then
 	LIBKLSCTE35_TAG=82dbcd1d540ed44ed1e421d708c8e2b1e5b64aa8
 	LIBKLVANC_TAG=vid.obe.1.6.0
 elif [ "$1" == "tsprobe" ]; then
-       DEP_BITSTREAM_TAG=20ce4345061499abc0389e9cd837665a62ad6add
-       DEP_LIBDVBPSI_TAG=d2a81c20a7704676048111b4f7ab24b95a904008
-       DEP_FFMPEG_TAG=release/4.4
-       LTNTSTOOLS_TAG=thumbnails
-       LIBLTNTSTOOLS_TAG=4252c52d67ad7d73d14988d0ea3bd72a362cddd2
-       LIBKLSCTE35_TAG=82dbcd1d540ed44ed1e421d708c8e2b1e5b64aa8
-       LIBKLVANC_TAG=vid.obe.1.6.0
+	DEP_BITSTREAM_TAG=20ce4345061499abc0389e9cd837665a62ad6add
+	DEP_LIBDVBPSI_TAG=d2a81c20a7704676048111b4f7ab24b95a904008
+	DEP_FFMPEG_TAG=release/4.4
+	LTNTSTOOLS_TAG=thumbnails
+	LIBLTNTSTOOLS_TAG=4252c52d67ad7d73d14988d0ea3bd72a362cddd2
+	LIBKLSCTE35_TAG=82dbcd1d540ed44ed1e421d708c8e2b1e5b64aa8
+	LIBKLVANC_TAG=vid.obe.1.6.0
 elif [ "$1" == "v1.30.0" ]; then
 	DEP_BITSTREAM_TAG=20ce4345061499abc0389e9cd837665a62ad6add
 	DEP_LIBDVBPSI_TAG=d2a81c20a7704676048111b4f7ab24b95a904008
@@ -337,7 +337,7 @@ if [ ! -d libltntstools ]; then
 fi
 
 if [ ! -d ltntstools ]; then
-       git clone https://github.com/groovybits/ltntstools.git
+	git clone https://github.com/groovybits/ltntstools.git
 	if [ "$LTNTSTOOLS_TAG" != "" ]; then
 		cd ltntstools && git checkout $LTNTSTOOLS_TAG && cd ..
 	fi
@@ -432,7 +432,7 @@ pushd ltntstools
 	export CFLAGS="-I$PWD/../target-root/usr/include"
 	export LDFLAGS="-L$PWD/../target-root/usr/lib -L$PWD/../target-root/usr/lib64"
 	./autogen.sh --build
-       ./configure --prefix=$PWD/../target-root/usr --enable-shared=no --enable-ntt=yes --enable-zmq
+	./configure --prefix=$PWD/../target-root/usr --enable-shared=no --enable-ntt=yes --enable-dtapi=no
 	make -j$JOBS
 	make install
 popd
