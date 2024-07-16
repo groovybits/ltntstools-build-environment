@@ -225,7 +225,7 @@ elif [ "$1" == "tsprobe" ]; then
        DEP_BITSTREAM_TAG=20ce4345061499abc0389e9cd837665a62ad6add
        DEP_LIBDVBPSI_TAG=d2a81c20a7704676048111b4f7ab24b95a904008
        DEP_FFMPEG_TAG=release/4.4
-       LTNTSTOOLS_TAG=zeromq
+       LTNTSTOOLS_TAG=thumbnails
        LIBLTNTSTOOLS_TAG=4252c52d67ad7d73d14988d0ea3bd72a362cddd2
        LIBKLSCTE35_TAG=82dbcd1d540ed44ed1e421d708c8e2b1e5b64aa8
        LIBKLVANC_TAG=vid.obe.1.6.0
