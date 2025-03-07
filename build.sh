@@ -237,12 +237,28 @@ elif [ "$1" == "v1.31.1" ]; then
 	LIBLTNTSTOOLS_TAG=afea546a286f6ad360210ec1516c3a25f0efcd3a
 	LIBKLSCTE35_TAG=82dbcd1d540ed44ed1e421d708c8e2b1e5b64aa8
 	LIBKLVANC_TAG=vid.obe.1.6.0
+elif [ "$1" == "probe_schema" ]; then
+	DEP_BITSTREAM_TAG=20ce4345061499abc0389e9cd837665a62ad6add
+	DEP_LIBDVBPSI_TAG=d2a81c20a7704676048111b4f7ab24b95a904008
+	DEP_FFMPEG_TAG=release/4.4
+	LTNTSTOOLS_TAG=v1.31.1
+	LIBLTNTSTOOLS_TAG=overrun_test
+	LIBKLSCTE35_TAG=82dbcd1d540ed44ed1e421d708c8e2b1e5b64aa8
+	LIBKLVANC_TAG=vid.obe.1.6.0
 elif [ "$1" == "v1.32.0-dev" ]; then
 	DEP_BITSTREAM_TAG=20ce4345061499abc0389e9cd837665a62ad6add
 	DEP_LIBDVBPSI_TAG=d2a81c20a7704676048111b4f7ab24b95a904008
 	DEP_FFMPEG_TAG=release/4.4
 	LTNTSTOOLS_TAG=master
 	LIBLTNTSTOOLS_TAG=e5b167a9ca9dff76b05b2f57220b254d24f0019e
+	LIBKLSCTE35_TAG=82dbcd1d540ed44ed1e421d708c8e2b1e5b64aa8
+	LIBKLVANC_TAG=vid.obe.1.6.0
+elif [ "$1" == "v1" ]; then
+	DEP_BITSTREAM_TAG=20ce4345061499abc0389e9cd837665a62ad6add
+	DEP_LIBDVBPSI_TAG=d2a81c20a7704676048111b4f7ab24b95a904008
+	DEP_FFMPEG_TAG=release/4.4
+	LTNTSTOOLS_TAG=master
+	LIBLTNTSTOOLS_TAG=master
 	LIBKLSCTE35_TAG=82dbcd1d540ed44ed1e421d708c8e2b1e5b64aa8
 	LIBKLVANC_TAG=vid.obe.1.6.0
 else
@@ -338,7 +354,7 @@ if [ ! -d libntt ]; then
 fi
 
 if [ ! -d libltntstools ]; then
-	git clone https://github.com/LTNGlobal-opensource/libltntstools.git
+	git clone https://github.com/groovybits/libltntstools.git
 	if [ "$LIBLTNTSTOOLS_TAG" != "" ]; then
 		cd libltntstools && git checkout $LIBLTNTSTOOLS_TAG && cd ..
 	fi
@@ -428,20 +444,20 @@ pushd ffmpeg
 popd
 
 pushd libltntstools
-	export CFLAGS="-I$PWD/../target-root/usr/include $NIELSEN_INC"
-	export CPPFLAGS="-I$PWD/../target-root/usr/include $NIELSEN_INC"
+	export CFLAGS="-g -I$PWD/../target-root/usr/include $NIELSEN_INC"
+	export CPPFLAGS="-g -I$PWD/../target-root/usr/include $NIELSEN_INC"
 	export LDFLAGS="-L$PWD/../target-root/usr/lib $NIELSEN_LIB"
 	./autogen.sh --build
-	./configure --prefix=$PWD/../target-root/usr --enable-shared=no
+	./configure --prefix=$PWD/../target-root/usr --enable-shared=no --enable-debug
 	make -j$JOBS
 	make install
 popd
 
 pushd ltntstools
-	export CFLAGS="-I$PWD/../target-root/usr/include"
+	export CFLAGS="-g -I$PWD/../target-root/usr/include"
 	export LDFLAGS="-L$PWD/../target-root/usr/lib -L$PWD/../target-root/usr/lib64"
 	./autogen.sh --build
-	./configure --prefix=$PWD/../target-root/usr --enable-shared=no --enable-ntt=yes
+	./configure --prefix=$PWD/../target-root/usr --enable-shared=no --enable-ntt=yes --enable-debug
 	make -j$JOBS
 	make install
 popd
